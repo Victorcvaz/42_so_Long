@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 01:28:42 by victorcvaz        #+#    #+#             */
-/*   Updated: 2024/01/26 12:52:56 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2024/02/07 02:00:52 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 int	main(int argc, char **argv)
 {
-	t_def	def;
+	t_def	*def;
 
-	var_init(&def);
 	input_check(&def, argv[1], argc);
 	init_game(&def);
+	var_init(&def);
+	// mlx_hook(def.mlx->window, 2, 1L << 0, key_press, &def);
+	mlx_loop(def->mlx);
+	free_game(&def, 0);
 	return (EXIT_SUCCESS);
 }
 
@@ -36,32 +39,31 @@ void	ft_error(int msg_nbr)
 		ft_putstr_fd("Error\nInvalid map content\n", 2);
 	else
 		ft_putstr_fd("Memory Error\n", 2);
-
 	exit(EXIT_FAILURE);
 }
 
-void	var_init(t_def *def)
+void	var_init(t_def **def)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	def->map->player = 0;
-	def->map->start = 0;
-	def->map->exit = 0;
-	def->map->collectibles = 0;
-	def->map->x_init = 0;
-	def->map->y_init = 0;
-	def->moves = 0;
-	while (def->map->buffer[i])
+	(*def)->map->player = 0;
+	(*def)->map->start = 0;
+	(*def)->map->exit = 0;
+	(*def)->map->collectibles = 0;
+	(*def)->map->x_init = 0;
+	(*def)->map->y_init = 0;
+	(*def)->moves = 0;
+	while ((*def)->map->buffer[i])
 	{
 		j = 0;
-		while (def->map->buffer[j])
+		while ((*def)->map->buffer[i][j] != '\0')
 		{
-			if (def->map->buffer[i][j] == 'P')
+			if ((*def)->map->buffer[i][j] == 'P')
 			{
-				def->map->x_init = i;
-				def->map->y_init = j;
+				(*def)->map->x_init = i;
+				(*def)->map->y_init = j;
 			}
 			j++;
 		}
