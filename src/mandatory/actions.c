@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 15:15:37 by victorcvaz        #+#    #+#             */
-/*   Updated: 2024/02/10 11:20:54 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2024/02/10 13:25:51 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	move_y(t_def **def, int y)
 				exit_game(def, 6);
 		}
 		(*def)->moves++;
-		printf("Moves: %d\n", (*def)->moves);
+		ft_printf("Moves: %d\n", (*def)->moves);
 		return (1);
 	}
 	return (0);
@@ -66,7 +66,7 @@ int	move_x(t_def **def, int x)
 				exit_game(def, 6);
 		}
 		(*def)->moves++;
-		printf("Moves: %d\n", (*def)->moves);
+		ft_printf("Moves: %d\n", (*def)->moves);
 		return (1);
 	}
 	return (0);
