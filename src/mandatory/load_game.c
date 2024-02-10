@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 15:15:46 by victorcvaz        #+#    #+#             */
-/*   Updated: 2024/02/07 10:54:07 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2024/02/09 02:26:05 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_game(t_def **def)
 
 	width = (*def)->map->w * WALL_SIZE;
 	height = (*def)->map->h * WALL_SIZE;
+	(*def)->map->item_count = (*def)->map->collectibles;
 	if (width > 1700)
 		width = 1700;
 	if (height > 900)
@@ -29,8 +30,8 @@ void	init_game(t_def **def)
 		mlx_close_window((*def)->mlx);
 		free_game(def, 404);
 	}
-	(*def)->sprite = ft_calloc(1, sizeof(t_sprite));
-	if (!(*def)->sprite)
+	(*def)->sprites = ft_calloc(1, sizeof(t_sprite));
+	if (!(*def)->sprites)
 	{
 		mlx_close_window((*def)->mlx);
 		free_game(def, 404);
@@ -41,23 +42,23 @@ void	init_game(t_def **def)
 
 void	load_images(t_def **def)
 {
-	(*def)->sprite->background = mlx_load_png("sprites/bg/bg.png");
-	(*def)->sprite->bg_tile = mlx_texture_to_image((*def)->mlx, 
-			(*def)->sprite->background);
-	(*def)->sprite->wall = mlx_load_png("sprites/wall/wall.png");
-	(*def)->sprite->wall_img = mlx_texture_to_image((*def)->mlx,
-			(*def)->sprite->wall);
-	(*def)->sprite->coin = mlx_load_png("sprites/item/item.png");
-	(*def)->sprite->coin_img = mlx_texture_to_image((*def)->mlx,
-			(*def)->sprite->coin);
-	(*def)->sprite->player = mlx_load_png("sprites/player/boar_SE_idle_3.png");
-	(*def)->sprite->player_img = mlx_texture_to_image((*def)->mlx, 
-			(*def)->sprite->player);
-	(*def)->sprite->exit = mlx_load_png("sprites/exit/exit.png");
-	(*def)->sprite->exit_img = mlx_texture_to_image((*def)->mlx,
-			(*def)->sprite->exit);
-	(*def)->sprite->icon = mlx_load_png("sprites/player/boar_SE_idle_3.png");
-	mlx_set_icon((*def)->mlx, (*def)->sprite->icon);
+	(*def)->sprites->background = mlx_load_png("sprites/bg/bg.png");
+	(*def)->sprites->bg_tile = mlx_texture_to_image((*def)->mlx, 
+			(*def)->sprites->background);
+	(*def)->sprites->wall = mlx_load_png("sprites/wall/wall.png");
+	(*def)->sprites->wall_img = mlx_texture_to_image((*def)->mlx,
+			(*def)->sprites->wall);
+	(*def)->sprites->coin = mlx_load_png("sprites/item/item.png");
+	(*def)->sprites->coin_img = mlx_texture_to_image((*def)->mlx,
+			(*def)->sprites->coin);
+	(*def)->sprites->player = mlx_load_png("sprites/player/porco_aranha1.png");
+	(*def)->sprites->player_img = mlx_texture_to_image((*def)->mlx, 
+			(*def)->sprites->player);
+	(*def)->sprites->exit = mlx_load_png("sprites/exit/exit.png");
+	(*def)->sprites->exit_img = mlx_texture_to_image((*def)->mlx,
+			(*def)->sprites->exit);
+	(*def)->sprites->icon = mlx_load_png("sprites/player/porco_aranha1.png");
+	mlx_set_icon((*def)->mlx, (*def)->sprites->icon);
 }
 
 void	position_to_draw(t_def **def, int w, int h)
@@ -71,10 +72,10 @@ void	position_to_draw(t_def **def, int w, int h)
 		x = 0;
 		while (x < w)
 		{
-			mlx_image_to_window((*def)->mlx, (*def)->sprite->bg_tile, x, y);
-			x += 32;
+			mlx_image_to_window((*def)->mlx, (*def)->sprites->bg_tile, x, y);
+			x += 64;
 		}
-		y += 32;
+		y += 64;
 	}
 	y = 0;
 	while ((*def)->map->buffer[y])
@@ -92,12 +93,18 @@ void	position_to_draw(t_def **def, int w, int h)
 void	draw_map(t_def **def, int i, int j)
 {
 	if ((*def)->map->buffer[i][j] == '1')
-		mlx_image_to_window((*def)->mlx, (*def)->sprite->wall_img,
+		mlx_image_to_window((*def)->mlx, (*def)->sprites->wall_img,
 			j * WALL_SIZE, i * WALL_SIZE);
 	else if ((*def)->map->buffer[i][j] == 'C')
-		mlx_image_to_window((*def)->mlx, (*def)->sprite->coin_img,
+		mlx_image_to_window((*def)->mlx, (*def)->sprites->coin_img,
 			j * WALL_SIZE, i * WALL_SIZE);
 	else if ((*def)->map->buffer[i][j] == 'P')
-		mlx_image_to_window((*def)->mlx, (*def)->sprite->player_img,
+		mlx_image_to_window((*def)->mlx, (*def)->sprites->player_img,
 			j * WALL_SIZE, i * WALL_SIZE);
+	else if ((*def)->map->buffer[i][j] == 'E')
+	{
+		mlx_image_to_window((*def)->mlx, (*def)->sprites->exit_img,
+			j * WALL_SIZE, i * WALL_SIZE);
+		(*def)->sprites->exit_img->enabled = false;
+	}
 }

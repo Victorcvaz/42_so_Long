@@ -5,7 +5,7 @@ LIBMLX	:= ./MLX42
 
 HEADERS	:= -I ./src/mandatory/so_long.h -I $(LIBMLX)/include/MLX42/
 LIB 	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm ./libft/libft.a
-SRCS	:= $(addprefix ./src/mandatory/, so_long.c check.c exit_game.c load_game.c actions.c)
+SRCS	:= $(addprefix ./src/mandatory/, so_long.c check.c exit_game.c load_game.c actions.c init_data.c)
 OBJS	:= $(SRCS:.c=.o)
 
 all: libft/libft.a $(LIBMLX)/build/libmlx42.a $(NAME)

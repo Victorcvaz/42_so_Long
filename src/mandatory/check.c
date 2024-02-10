@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 14:59:24 by victorcvaz        #+#    #+#             */
-/*   Updated: 2024/02/07 01:34:07 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2024/02/08 17:44:28 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,31 @@ void	input_check(t_def **def, char *argv, int argc)
 {
 	int		fd;
 	int		index;
-	char	buff[BUFFER_SIZE];
+	char	buffer[BUFFER_SIZE];
 
+	index = 0;
+	fd = 0;
+	buffer[0] = '\0';
 	if (argc != 2)
 		ft_error(1);
+	if (ft_strncmp(&argv[ft_strlen(argv) - 4], ".ber", 4) != 0)
+		ft_error(3);
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
 		ft_error(2);
-	if (ft_strncmp(&argv[ft_strlen(argv) - 4], ".ber", 4) != 0)
-		ft_error(3);
-	index = read(fd, buff, BUFFER_SIZE);
+	index = read(fd, buffer, BUFFER_SIZE);
 	if (index == -1)
 		ft_error(4);
-	buff[index] = '\0';
-	*def = ft_calloc(1, sizeof(t_def));
-	if (*def == NULL)
-		ft_error(404);
-	(*def)->map = ft_calloc(1, sizeof(t_map));
-	if ((*def)->map == NULL)
-	{
-		free(*def);
-		ft_error(404);
-	}
-	fill_map_check(def, fd, buff);
+	buffer[index] = '\0';
+	close(fd);
+	init_def(def, buffer);
+	fill_map_check(def);
 }
 
-void	fill_map_check(t_def **def, int fd, char *buff)
+void	fill_map_check(t_def **def)
 {
 	int		index;
 
-	(*def)->map->buffer = ft_split(buff, '\n');
-	if ((*def)->map->buffer == NULL)
-		ft_error(404);
-	(*def)->map->h = 0;
 	(*def)->map->w = ft_strlen((*def)->map->buffer[0]);
 	while ((*def)->map->buffer[(*def)->map->h])
 		(*def)->map->h++;
@@ -64,7 +56,6 @@ void	fill_map_check(t_def **def, int fd, char *buff)
 		|| (*def)->map->exit != 1 || (*def)->map->collectibles < 1
 		|| (*def)->map->h == (*def)->map->w)
 		free_game(def, 5);
-	close(fd);
 }
 
 void	check_map(t_def **def)
