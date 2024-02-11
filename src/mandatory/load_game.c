@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 15:15:46 by victorcvaz        #+#    #+#             */
-/*   Updated: 2024/02/09 02:26:05 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2024/02/10 23:37:57 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ void	init_game(t_def **def)
 		height = 900;
 	(*def)->mlx = mlx_init(width, height, "So_long", false);
 	if (!(*def)->mlx)
-	{
-		mlx_close_window((*def)->mlx);
-		free_game(def, 404);
-	}
-	(*def)->sprites = ft_calloc(1, sizeof(t_sprite));
-	if (!(*def)->sprites)
 	{
 		mlx_close_window((*def)->mlx);
 		free_game(def, 404);

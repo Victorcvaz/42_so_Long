@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 03:33:01 by victorcvaz        #+#    #+#             */
-/*   Updated: 2024/02/08 09:24:39 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2024/02/10 23:30:18 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ void	free_game(t_def **def, int option)
 
 void	clean_images(t_def **def)
 {
-	mlx_delete_texture((*def)->sprites->background);
 	mlx_delete_image((*def)->mlx, (*def)->sprites->bg_tile);
-	mlx_delete_texture((*def)->sprites->wall);
+	mlx_delete_texture((*def)->sprites->background);
 	mlx_delete_image((*def)->mlx, (*def)->sprites->wall_img);
-	mlx_delete_texture((*def)->sprites->coin);
+	mlx_delete_texture((*def)->sprites->wall);
 	mlx_delete_image((*def)->mlx, (*def)->sprites->coin_img);
-	mlx_delete_texture((*def)->sprites->player);
+	mlx_delete_texture((*def)->sprites->coin);
 	mlx_delete_image((*def)->mlx, (*def)->sprites->player_img);
-	mlx_delete_texture((*def)->sprites->exit);
+	mlx_delete_texture((*def)->sprites->player);
 	mlx_delete_image((*def)->mlx, (*def)->sprites->exit_img);
+	mlx_delete_texture((*def)->sprites->exit);
 	mlx_delete_texture((*def)->sprites->icon);
 }
 
