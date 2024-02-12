@@ -6,7 +6,7 @@
 /*   By: victorcvaz <victorcvaz@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 15:15:46 by victorcvaz        #+#    #+#             */
-/*   Updated: 2024/02/10 23:37:57 by victorcvaz       ###   ########.fr       */
+/*   Updated: 2024/02/11 22:18:53 by victorcvaz       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	init_game(t_def **def)
 	width = (*def)->map->w * WALL_SIZE;
 	height = (*def)->map->h * WALL_SIZE;
 	(*def)->map->item_count = (*def)->map->collectibles;
-	if (width > 1700)
-		width = 1700;
-	if (height > 900)
-		height = 900;
+	if (width > 1280)
+		width = 1280;
+	if (height > 1024)
+		height = 1024;
 	(*def)->mlx = mlx_init(width, height, "So_long", false);
 	if (!(*def)->mlx)
 	{
